@@ -1,5 +1,6 @@
 var ejs = require('ejs');
 var error = require('../lib/error');
+var Classification = require('../models/Classification');
 var _ = require('underscore');
 
 var requests = [];
@@ -9,6 +10,11 @@ exports.index = function(req, res){
 };
 
 exports.classify = function(req, res){
-  res.json({});
+
+  var query = req.params.query;
+  Classification.searchAnchors(query, function(err, anchors){
+    res.json(anchors);
+  });
+  
 };
 
