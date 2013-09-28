@@ -16,15 +16,25 @@ module.exports.searchAnchors = function(query, cb){
       }
 
       var $ = window.$;
-      var anchorsDOM = $.find('#bodyContent a');
+
+      $('#bodyContent').find('.navbox').remove();
+      $('#bodyContent').find('.metadata').remove();
+      $('#bodyContent').find('.catlinks').remove();
+      $('#bodyContent').find('.toc').remove();
+      $('#bodyContent').find('a.image,a.internal').remove();
+
+      var anchorsDOM = $.find('#bodyContent a[href^="/wiki/"]');
+
+      console.log(anchorsDOM.length);
 
       var anchors = [];
       anchorsDOM.forEach(function(anchor){
-        if (anchor.title && (/\/wiki\//gi.test(anchor.pathname))) {
+        if (anchor.title) {
           anchors.push({
             'title': anchor.title,
             'pathname': anchor.pathname
           });
+          console.log(anchors[anchors.length-1]);
         }
         
       });
@@ -50,11 +60,17 @@ module.exports.searchChildren = function(child, parent, cb){
       }
 
       var $ = window.$;
-      var anchorsDOM = $.find('#bodyContent a[href="/wiki/' + parent + '"]');
+      $('#bodyContent').find('.navbox').remove();
+      $('#bodyContent').find('.metadata').remove();
+      $('#bodyContent').find('.catlinks').remove();
+      $('#bodyContent').find('.toc').remove();
+      $('#bodyContent').find('a.image,a.internal').remove();
+
+      var anchorsDOM = $.find('#bodyContent a[href^="/wiki/' + parent + '"]');
 
       var anchors = [];
       anchorsDOM.forEach(function(anchor){
-        if (anchor.title && (/\/wiki\//gi.test(anchor.pathname))) {
+        if (anchor.title) {
           anchors.push({
             'title': anchor.title,
             'pathname': anchor.pathname

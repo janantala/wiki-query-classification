@@ -14,13 +14,15 @@ exports.classify = function(req, res){
   var query = req.params.query;
   Classification.searchAnchors(query, function(err, anchors){
     
+    console.log(anchors);
+
     var keywords = [];
     var count = 0;
     anchors.forEach(function(anchor){
       Classification.searchChildren(anchor.pathname, query, function(err, refs){
         count ++;
         console.log(count + ' / ' + anchors.length);
-        if (refs.length) {
+        if (refs && refs.length) {
           console.log(anchor);
           keywords.push(anchor);
         }
