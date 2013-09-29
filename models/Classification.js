@@ -29,6 +29,7 @@ module.exports.searchAnchors = function(query, cb){
       $('#bodyContent a[href^="/wiki/Help:"]').remove();
       $('#bodyContent a[href^="/wiki/Special:"]').remove();
       $('#bodyContent a[href^="/wiki/Portal:"]').remove();
+      $('#bodyContent a[href^="/wiki/Wikipedia:"]').remove();
 
       var anchorsDOM = $.find('#bodyContent a[href^="/wiki/"]');
 
@@ -71,6 +72,7 @@ module.exports.searchChildren = function(child, parent, cb){
       $('#bodyContent a[href^="/wiki/Help:"]').remove();
       $('#bodyContent a[href^="/wiki/Special:"]').remove();
       $('#bodyContent a[href^="/wiki/Portal:"]').remove();
+      $('#bodyContent a[href^="/wiki/Wikipedia:"]').remove();
 
       var anchorsDOM = $.find('#bodyContent a[href^="/wiki/' + parent + '"]');
 
