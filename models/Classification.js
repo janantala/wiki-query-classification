@@ -27,6 +27,8 @@ module.exports.searchAnchors = function(query, cb){
 
       console.log(anchorsDOM.length);
 
+      // TODO filter special and help anchors
+      
       var anchors = [];
       anchorsDOM.forEach(function(anchor){
         if (anchor.title) {
@@ -39,6 +41,7 @@ module.exports.searchAnchors = function(query, cb){
         
       });
 
+      // TODO filter duplicates
 
       return cb(null, anchors);
     }
