@@ -9,11 +9,15 @@ exports.index = function(req, res){
   res.render('index');
 };
 
-exports.classify = function(req, res){
+exports.classify = function(req, res, next){
 
   var query = req.params.query;
   Classification.searchAnchors(query, function(err, anchors){
     
+    if (err) {
+      return next(err);
+    }
+
     console.log(anchors);
     console.log(anchors.length);
 
