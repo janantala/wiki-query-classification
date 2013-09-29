@@ -27,15 +27,18 @@ module.exports.searchAnchors = function(query, cb){
 
       $('#bodyContent a[href^="/wiki/Help:"]').remove();
       $('#bodyContent a[href^="/wiki/Special:"]').remove();
+      $('#bodyContent a[href^="/wiki/Portal:"]').remove();
 
       var anchorsDOM = $.find('#bodyContent a[href^="/wiki/"]');
 
-      var anchors = _.map(anchorsDOM, function(anchor) { return _.pick(anchor, 'title', 'pathname'); });
-      console.log(anchors);
-      console.log(anchors.length);
+      var anchors = _.map(anchorsDOM, function(anchor){
+        return _.pick(anchor, 'title', 'pathname');
+      });
 
-      // TODO filter duplicates
-
+      anchors = _.uniq(anchors, function(anchor){
+        return anchor.pathname;
+      });
+      
       return cb(null, anchors);
     }
   });
