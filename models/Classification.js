@@ -1,6 +1,7 @@
 var jsdom = require('jsdom');
 var fs = require('fs');
 var jquery = fs.readFileSync(process.cwd() + '/lib/jquery.js', 'utf-8');
+var _ = require('underscore');
 
 module.exports.searchAnchors = function(query, cb){
   jsdom.env({
@@ -22,24 +23,16 @@ module.exports.searchAnchors = function(query, cb){
       $('#bodyContent').find('.catlinks').remove();
       $('#bodyContent').find('.toc').remove();
       $('#bodyContent').find('a.image,a.internal').remove();
+      $('#bodyContent').find('.reflist').remove();
+
+      $('#bodyContent a[href^="/wiki/Help:"]').remove();
+      $('#bodyContent a[href^="/wiki/Special:"]').remove();
 
       var anchorsDOM = $.find('#bodyContent a[href^="/wiki/"]');
 
-      console.log(anchorsDOM.length);
-
-      // TODO filter special and help anchors
-      
-      var anchors = [];
-      anchorsDOM.forEach(function(anchor){
-        if (anchor.title) {
-          anchors.push({
-            'title': anchor.title,
-            'pathname': anchor.pathname
-          });
-          console.log(anchors[anchors.length-1]);
-        }
-        
-      });
+      var anchors = _.map(anchorsDOM, function(anchor) { return _.pick(anchor, 'title', 'pathname'); });
+      console.log(anchors);
+      console.log(anchors.length);
 
       // TODO filter duplicates
 

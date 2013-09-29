@@ -10,6 +10,7 @@
     "underscore": "*",
     "jsdom": ">= 0.7.0",
     "ejs": "*",
+    "underscore": "*",
     "time": "*",
     "local-tld-update": "*"
   }
