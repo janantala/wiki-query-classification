@@ -11,6 +11,7 @@
     "jsdom": ">= 0.7.0",
     "ejs": "*",
     "underscore": "*",
+    "connect-timeout": "*",
     "time": "*",
     "local-tld-update": "*"
   }

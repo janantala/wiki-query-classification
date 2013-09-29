@@ -1,3 +1,6 @@
+var connectTimeout = require('connect-timeout');
+var longTimeout = connectTimeout({time: 1000 * 60 * 60});
+
 module.exports = function(app) {
 
   // cors
@@ -15,5 +18,5 @@ module.exports = function(app) {
 
   var routes = require('../routes');
   app.get('/', routes.index);
-  app.get('/classify/:query', routes.classify);
+  app.get('/classify/:query', longTimeout, routes.classify);
 };
