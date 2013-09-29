@@ -15,6 +15,7 @@ exports.classify = function(req, res){
   Classification.searchAnchors(query, function(err, anchors){
     
     console.log(anchors);
+    console.log(anchors.length);
 
     var keywords = [];
     var count = 0;
@@ -32,7 +33,7 @@ exports.classify = function(req, res){
         }
       });
     });
-
+    
   });
   
 };

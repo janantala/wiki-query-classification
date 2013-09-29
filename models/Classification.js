@@ -10,10 +10,11 @@ module.exports.searchAnchors = function(query, cb){
     done: function (errors, window) {
       if (errors) {
         console.log(errors);
-        return cb ? cb(errors) : false;
+        console.log(child);
+        return cb ? cb(errors) : cb(true);
       }
       if (!window) {
-        return cb ? cb(new error.HttpResponseError('wikipedia.org connection error')) : false;
+        return cb ? cb('wikipedia.org connection error') : cb(true);
       }
 
       var $ = window.$;
@@ -38,7 +39,7 @@ module.exports.searchAnchors = function(query, cb){
       anchors = _.uniq(anchors, function(anchor){
         return anchor.pathname;
       });
-      
+
       return cb(null, anchors);
     }
   });
@@ -52,10 +53,11 @@ module.exports.searchChildren = function(child, parent, cb){
     done: function (errors, window) {
       if (errors) {
         console.log(errors);
-        return cb ? cb(errors) : false;
+        console.log(child);
+        return cb ? cb(errors) : cb(true);
       }
       if (!window) {
-        return cb ? cb(new error.HttpResponseError('wikipedia.org connection error')) : false;
+        return cb ? cb('wikipedia.org connection error') : cb(true);
       }
 
       var $ = window.$;
@@ -64,18 +66,16 @@ module.exports.searchChildren = function(child, parent, cb){
       $('#bodyContent').find('.catlinks').remove();
       $('#bodyContent').find('.toc').remove();
       $('#bodyContent').find('a.image,a.internal').remove();
+      $('#bodyContent').find('.reflist').remove();
+
+      $('#bodyContent a[href^="/wiki/Help:"]').remove();
+      $('#bodyContent a[href^="/wiki/Special:"]').remove();
+      $('#bodyContent a[href^="/wiki/Portal:"]').remove();
 
       var anchorsDOM = $.find('#bodyContent a[href^="/wiki/' + parent + '"]');
 
-      var anchors = [];
-      anchorsDOM.forEach(function(anchor){
-        if (anchor.title) {
-          anchors.push({
-            'title': anchor.title,
-            'pathname': anchor.pathname
-          });
-        }
-        
+      var anchors = _.map(anchorsDOM, function(anchor){
+        return _.pick(anchor, 'title', 'pathname');
       });
 
       return cb(null, anchors);
