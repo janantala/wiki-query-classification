@@ -20,7 +20,7 @@ exports.classify = function(req, res){
     var keywords = [];
     var count = 0;
     anchors.forEach(function(anchor){
-      Classification.searchChildren(anchor.pathname, query, function(err, refs){
+      Classification.searchChildren(anchor.pathname, encodeURIComponent(query), function(err, refs){
         count ++;
         console.log(count + ' / ' + anchors.length);
         if (refs && refs.length) {
